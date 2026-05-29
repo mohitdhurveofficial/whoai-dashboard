@@ -9,7 +9,7 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="bg-[#F7F3EE] min-h-screen">
+    <div className="texture min-h-screen bg-[#F7F3EE]">
       {/* NAVBAR */}
 
       <nav className="sticky top-0 z-50">
@@ -19,7 +19,7 @@ export default function HomePage() {
               WhoAI
             </h1>
 
-            <div className="flex gap-8">
+            <div className="hidden md:flex gap-8">
               <a href="#features">Features</a>
               <a href="#pricing">Pricing</a>
               <a href="#contact">Contact</a>
@@ -44,20 +44,20 @@ export default function HomePage() {
             Runtime Governance Platform
           </div>
 
-          <h1 className="text-7xl font-bold leading-tight max-w-5xl mx-auto">
+          <h1 className="text-5xl md:text-7xl font-bold leading-tight max-w-5xl mx-auto">
             Runtime Governance
             <br />
             For Autonomous AI Agents
           </h1>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mt-8">
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mt-8 px-4">
             Prevent unauthorized AI actions.
             Enforce policies, require approvals,
             and maintain complete audit trails
             before agents execute critical actions.
           </p>
 
-          <div className="flex justify-center gap-4 mt-10">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-10">
             <Link
               href="/dashboard"
               className="bg-black text-white px-8 py-4 rounded-full flex items-center gap-2"
@@ -82,7 +82,7 @@ export default function HomePage() {
             Governance Flow
           </h2>
 
-          <div className="grid md:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
 
             <div className="bg-slate-50 p-6 rounded-2xl">
               <Brain size={40} />
@@ -126,7 +126,7 @@ export default function HomePage() {
       {/* DASHBOARD PREVIEW */}
 
       <section className="max-w-7xl mx-auto px-8 mb-32">
-        <h2 className="text-5xl font-bold text-center mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
           Full Visibility Into Agent Decisions
         </h2>
 
@@ -145,7 +145,7 @@ export default function HomePage() {
         id="features"
         className="max-w-7xl mx-auto px-8 mb-32"
       >
-        <h2 className="text-5xl font-bold text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           Enterprise AI Governance
         </h2>
 
@@ -190,7 +190,7 @@ export default function HomePage() {
       {/* METRICS */}
 
       <section className="max-w-7xl mx-auto px-8 mb-32">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 
           <div className="text-center">
             <h3 className="text-6xl font-bold">
@@ -229,11 +229,11 @@ export default function HomePage() {
         id="pricing"
         className="max-w-7xl mx-auto px-8 mb-32"
       >
-        <h2 className="text-5xl font-bold text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
           Pricing
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
           <div className="bg-white p-8 rounded-3xl shadow">
             <h3 className="text-2xl font-bold">
@@ -272,7 +272,7 @@ export default function HomePage() {
 
       <section className="pb-32">
         <div className="max-w-5xl mx-auto bg-black text-white rounded-[40px] p-16 text-center">
-          <h2 className="text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold mb-6">
             Govern AI Before AI Governs You
           </h2>
 
