@@ -15,6 +15,7 @@ export default function HomePage() {
 
       <nav className="sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-8 py-6">
+
           <div className="bg-white/80 backdrop-blur-xl rounded-full px-6 md:px-8 py-4 shadow-lg flex items-center justify-between">
 
             <h1 className="font-black text-2xl">
@@ -29,28 +30,19 @@ export default function HomePage() {
 
             <Link
               href="/dashboard"
-              className="
-                bg-black
-                text-white
-                px-6
-                py-3
-                rounded-full
-                hover:scale-105
-                transition-all
-              "
+              className="bg-black text-white px-6 py-3 rounded-full hover:scale-105 transition-all"
             >
               Dashboard
             </Link>
 
           </div>
+
         </div>
       </nav>
 
       {/* HERO */}
 
       <section className="relative max-w-7xl mx-auto px-6 md:px-8 pt-20 pb-40 overflow-hidden">
-
-        {/* Background Artwork */}
 
         <div className="absolute inset-0 pointer-events-none">
 
@@ -63,8 +55,6 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
-
-          {/* LEFT */}
 
           <div>
 
@@ -90,39 +80,18 @@ export default function HomePage() {
 
               <Link
                 href="/dashboard"
-                className="
-                  bg-black
-                  text-white
-                  px-8
-                  py-4
-                  rounded-full
-                  hover:scale-105
-                  transition-all
-                  shadow-xl
-                "
+                className="bg-black text-white px-8 py-4 rounded-full hover:scale-105 transition-all shadow-xl"
               >
                 Launch Dashboard
               </Link>
 
-              <button
-                className="
-                  bg-white
-                  px-8
-                  py-4
-                  rounded-full
-                  shadow-lg
-                  hover:scale-105
-                  transition-all
-                "
-              >
+              <button className="bg-white px-8 py-4 rounded-full shadow-lg hover:scale-105 transition-all">
                 Book Demo
               </button>
 
             </div>
 
           </div>
-
-          {/* RIGHT */}
 
           <div className="relative h-[600px] hidden lg:block">
 
@@ -169,6 +138,7 @@ export default function HomePage() {
       {/* GOVERNANCE FLOW */}
 
       <section className="max-w-7xl mx-auto px-6 md:px-8 mb-32">
+
         <div className="bg-white rounded-[40px] shadow-xl p-12">
 
           <h2 className="text-4xl font-bold text-center mb-16">
@@ -205,6 +175,7 @@ export default function HomePage() {
           </div>
 
         </div>
+
       </section>
 
       {/* FEATURES */}
@@ -213,6 +184,7 @@ export default function HomePage() {
         id="features"
         className="max-w-7xl mx-auto px-6 md:px-8 mb-32"
       >
+
         <h2 className="text-5xl font-bold text-center mb-16">
           Enterprise AI Governance
         </h2>
@@ -250,6 +222,39 @@ export default function HomePage() {
           </div>
 
         </div>
+
+      </section>
+
+      {/* PRICING */}
+
+      <section
+        id="pricing"
+        className="max-w-7xl mx-auto px-6 md:px-8 mb-32"
+      >
+
+        <h2 className="text-5xl font-bold text-center mb-16">
+          Pricing
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+
+          <div className="bg-white p-8 rounded-3xl shadow">
+            <h3 className="text-2xl font-bold">Starter</h3>
+            <div className="text-5xl font-bold my-6">$99</div>
+          </div>
+
+          <div className="bg-black text-white p-8 rounded-3xl shadow">
+            <h3 className="text-2xl font-bold">Growth</h3>
+            <div className="text-5xl font-bold my-6">$499</div>
+          </div>
+
+          <div className="bg-white p-8 rounded-3xl shadow">
+            <h3 className="text-2xl font-bold">Enterprise</h3>
+            <div className="text-5xl font-bold my-6">Custom</div>
+          </div>
+
+        </div>
+
       </section>
 
       {/* CONTACT */}
@@ -258,6 +263,7 @@ export default function HomePage() {
         id="contact"
         className="max-w-7xl mx-auto px-6 md:px-8 mb-32"
       >
+
         <div className="bg-white rounded-[40px] shadow-xl p-12 text-center">
 
           <h2 className="text-5xl font-bold mb-6">
@@ -272,24 +278,18 @@ export default function HomePage() {
 
           <a
             href="mailto:hello@whoai.ai"
-            className="
-              inline-block
-              bg-black
-              text-white
-              px-8
-              py-4
-              rounded-full
-            "
+            className="inline-block bg-black text-white px-8 py-4 rounded-full"
           >
             Contact Sales
           </a>
 
         </div>
+
       </section>
 
       {/* CTA */}
 
-      <section className="pb-32 px-6 md:px-8">
+      <section className="pb-20 px-6 md:px-8">
 
         <div className="max-w-5xl mx-auto bg-black text-white rounded-[40px] p-16 text-center">
 
@@ -299,15 +299,7 @@ export default function HomePage() {
 
           <Link
             href="/dashboard"
-            className="
-              inline-block
-              mt-6
-              bg-white
-              text-black
-              px-8
-              py-4
-              rounded-full
-            "
+            className="inline-block mt-6 bg-white text-black px-8 py-4 rounded-full"
           >
             Start Now
           </Link>
@@ -315,6 +307,58 @@ export default function HomePage() {
         </div>
 
       </section>
+
+      {/* FOOTER */}
+
+      <footer className="border-t border-black/10 py-16">
+
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+
+          <div className="grid md:grid-cols-3 gap-12">
+
+            <div>
+              <h3 className="text-3xl font-black mb-4">
+                WhoAI
+              </h3>
+
+              <p className="text-gray-600 max-w-sm">
+                Runtime Governance for
+                Autonomous AI Agents.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">
+                Platform
+              </h4>
+
+              <div className="space-y-3 text-gray-600">
+                <p>Pricing</p>
+                <p>Documentation</p>
+                <p>Dashboard</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-bold mb-4">
+                Company
+              </h4>
+
+              <div className="space-y-3 text-gray-600">
+                <p>About</p>
+                <p>Contact</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="border-t border-black/10 mt-12 pt-8 text-center text-gray-500">
+            © 2026 WhoAI. All rights reserved.
+          </div>
+
+        </div>
+
+      </footer>
 
     </div>
   );
