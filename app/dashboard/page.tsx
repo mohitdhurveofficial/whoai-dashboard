@@ -4,6 +4,7 @@ import {
   getDecisions,
   getRecentActivity,
   getDecisionAnalytics,
+  getRiskAnalytics,
 } from "@/lib/api";
 
 import Sidebar from "../components/Sidebar";
@@ -17,6 +18,7 @@ export default async function DashboardPage() {
   const decisions = await getDecisions();
   const activity = await getRecentActivity();
   const decisionAnalytics = await getDecisionAnalytics();
+  const riskAnalytics = await getRiskAnalytics();
 
   return (
     <div className="flex">
@@ -38,7 +40,7 @@ export default async function DashboardPage() {
             <KpiCard title="Risk Score" value={overview.risk_score} />
           </div>
 
-          {/* Decision Analytics KPIs */}
+          {/* Decision Analytics */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <KpiCard
               title="Total Decisions"
@@ -58,6 +60,29 @@ export default async function DashboardPage() {
             <KpiCard
               title="Approval Rate %"
               value={decisionAnalytics.approval_rate}
+            />
+          </div>
+
+          {/* Risk Analytics */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <KpiCard
+              title="Low Risk"
+              value={riskAnalytics.low_risk}
+            />
+
+            <KpiCard
+              title="Medium Risk"
+              value={riskAnalytics.medium_risk}
+            />
+
+            <KpiCard
+              title="High Risk"
+              value={riskAnalytics.high_risk}
+            />
+
+            <KpiCard
+              title="Approval Required"
+              value={riskAnalytics.approval_required}
             />
           </div>
 
