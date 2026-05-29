@@ -61,3 +61,11 @@ export async function getSystemReadiness() {
 export async function getSystemDiagnostics() {
   return fetchJson("/api/v1/system/diagnostics");
 }
+
+export async function getDecisionAnalytics() {
+  return fetchJson("/api/v1/analytics/decisions");
+}
+
+export async function getRiskAnalytics() {
+  return fetchJson("/api/v1/analytics/risk");
+}

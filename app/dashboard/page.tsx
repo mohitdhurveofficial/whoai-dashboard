@@ -3,6 +3,7 @@ import {
   getDoctor,
   getDecisions,
   getRecentActivity,
+  getDecisionAnalytics,
 } from "@/lib/api";
 
 import Sidebar from "../components/Sidebar";
@@ -15,6 +16,7 @@ export default async function DashboardPage() {
   const doctor = await getDoctor();
   const decisions = await getDecisions();
   const activity = await getRecentActivity();
+  const decisionAnalytics = await getDecisionAnalytics();
 
   return (
     <div className="flex">
@@ -28,6 +30,7 @@ export default async function DashboardPage() {
             WhoAI Governance Dashboard
           </h1>
 
+          {/* Core KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <KpiCard title="Agents" value={overview.agents} />
             <KpiCard title="Policies" value={overview.policies} />
@@ -35,6 +38,30 @@ export default async function DashboardPage() {
             <KpiCard title="Risk Score" value={overview.risk_score} />
           </div>
 
+          {/* Decision Analytics KPIs */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <KpiCard
+              title="Total Decisions"
+              value={decisionAnalytics.total_decisions}
+            />
+
+            <KpiCard
+              title="Approved"
+              value={decisionAnalytics.approved}
+            />
+
+            <KpiCard
+              title="Approval Required"
+              value={decisionAnalytics.approval_required}
+            />
+
+            <KpiCard
+              title="Approval Rate %"
+              value={decisionAnalytics.approval_rate}
+            />
+          </div>
+
+          {/* System Health */}
           <div className="bg-white rounded-xl shadow p-6 mb-8">
             <h2 className="text-2xl font-bold mb-4">
               System Health
@@ -48,13 +75,13 @@ export default async function DashboardPage() {
             </div>
           </div>
 
+          {/* Recent Activity */}
           <div className="bg-white rounded-xl shadow p-6 mb-8">
             <h2 className="text-2xl font-bold mb-4">
               Recent Activity
             </h2>
 
             <div className="grid md:grid-cols-3 gap-6">
-
               <div>
                 <h3 className="font-bold mb-2">
                   Decisions
@@ -66,6 +93,7 @@ export default async function DashboardPage() {
                     className="border rounded p-3 mb-2"
                   >
                     <p>{item.decision}</p>
+
                     <p className="text-sm text-gray-500">
                       {item.reason}
                     </p>
@@ -99,16 +127,17 @@ export default async function DashboardPage() {
                     className="border rounded p-3 mb-2"
                   >
                     <p>{item.name}</p>
+
                     <p className="text-sm text-gray-500">
                       {item.status}
                     </p>
                   </div>
                 ))}
               </div>
-
             </div>
           </div>
 
+          {/* Recent Decisions */}
           <div className="bg-white rounded-xl shadow p-6">
             <h2 className="text-2xl font-bold mb-4">
               Recent Decisions
