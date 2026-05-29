@@ -32,7 +32,7 @@ export default async function ApprovalsPage() {
               </thead>
 
               <tbody>
-                {approvals.map((approval: any) => (
+                {approvals.map((approval) => (
                   <tr
                     key={approval.id}
                     className="border-b"

@@ -1,5 +1,7 @@
+import type { Decision } from "@/lib/api";
+
 type Props = {
-  decisions: any[];
+  decisions: Decision[];
 };
 
 export default function DecisionTable({ decisions }: Props) {
@@ -14,10 +16,10 @@ export default function DecisionTable({ decisions }: Props) {
       </thead>
 
       <tbody>
-        {decisions.map((d, i) => (
-          <tr key={i}>
+        {decisions.map((d) => (
+          <tr key={d.id}>
             <td className="p-2">{d.agent_id}</td>
-            <td className="p-2">{d.action}</td>
+            <td className="p-2">{d.action_type}</td>
             <td className="p-2">{d.decision}</td>
           </tr>
         ))}

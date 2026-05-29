@@ -112,7 +112,7 @@ export default async function DashboardPage() {
                   Decisions
                 </h3>
 
-                {activity.recent_decisions?.map((item: any) => (
+                {activity.recent_decisions?.map((item) => (
                   <div
                     key={item.id}
                     className="border rounded p-3 mb-2"
@@ -131,7 +131,7 @@ export default async function DashboardPage() {
                   Approvals
                 </h3>
 
-                {activity.recent_approvals?.map((item: any) => (
+                {activity.recent_approvals?.map((item) => (
                   <div
                     key={item.id}
                     className="border rounded p-3 mb-2"
@@ -146,7 +146,7 @@ export default async function DashboardPage() {
                   Agents
                 </h3>
 
-                {activity.recent_agents?.map((item: any) => (
+                {activity.recent_agents?.map((item) => (
                   <div
                     key={item.id}
                     className="border rounded p-3 mb-2"

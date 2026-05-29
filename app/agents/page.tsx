@@ -20,7 +20,7 @@ export default async function AgentsPage() {
         </thead>
 
         <tbody>
-          {agents.map((agent: any) => (
+          {agents.map((agent) => (
             <tr key={agent.id} className="border-b">
               <td className="p-3">{agent.name}</td>
               <td className="p-3">{agent.environment}</td>

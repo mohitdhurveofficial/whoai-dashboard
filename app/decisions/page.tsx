@@ -1,5 +1,4 @@
 
-
 import { getDecisions } from "@/lib/api";
 
 export default async function DecisionsPage() {
@@ -23,7 +22,7 @@ export default async function DecisionsPage() {
             </tr>
           </thead>
           <tbody>
-            {decisions.map((decision: any) => (
+            {decisions.map((decision) => (
               <tr key={decision.id} className="border-t">
                 <td className="p-3">{decision.id}</td>
                 <td className="p-3">{decision.agent_id}</td>
