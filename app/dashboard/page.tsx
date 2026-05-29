@@ -1,4 +1,10 @@
-import { getOverview, getDoctor, getDecisions } from "@/lib/api";
+import {
+  getOverview,
+  getDoctor,
+  getDecisions,
+  getRecentActivity,
+} from "@/lib/api";
+
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import KpiCard from "../components/KpiCard";
@@ -8,6 +14,7 @@ export default async function DashboardPage() {
   const overview = await getOverview();
   const doctor = await getDoctor();
   const decisions = await getDecisions();
+  const activity = await getRecentActivity();
 
   return (
     <div className="flex">
@@ -21,7 +28,7 @@ export default async function DashboardPage() {
             WhoAI Governance Dashboard
           </h1>
 
-          <div className="grid grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <KpiCard title="Agents" value={overview.agents} />
             <KpiCard title="Policies" value={overview.policies} />
             <KpiCard title="API Keys" value={overview.api_keys} />
@@ -38,6 +45,67 @@ export default async function DashboardPage() {
               <p>Security Score: {doctor.security_score}</p>
               <p>Policy Coverage: {doctor.policy_coverage}</p>
               <p>Readiness Score: {doctor.readiness_score}</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow p-6 mb-8">
+            <h2 className="text-2xl font-bold mb-4">
+              Recent Activity
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-6">
+
+              <div>
+                <h3 className="font-bold mb-2">
+                  Decisions
+                </h3>
+
+                {activity.recent_decisions?.map((item: any) => (
+                  <div
+                    key={item.id}
+                    className="border rounded p-3 mb-2"
+                  >
+                    <p>{item.decision}</p>
+                    <p className="text-sm text-gray-500">
+                      {item.reason}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <h3 className="font-bold mb-2">
+                  Approvals
+                </h3>
+
+                {activity.recent_approvals?.map((item: any) => (
+                  <div
+                    key={item.id}
+                    className="border rounded p-3 mb-2"
+                  >
+                    <p>{item.status}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <h3 className="font-bold mb-2">
+                  Agents
+                </h3>
+
+                {activity.recent_agents?.map((item: any) => (
+                  <div
+                    key={item.id}
+                    className="border rounded p-3 mb-2"
+                  >
+                    <p>{item.name}</p>
+                    <p className="text-sm text-gray-500">
+                      {item.status}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
 
