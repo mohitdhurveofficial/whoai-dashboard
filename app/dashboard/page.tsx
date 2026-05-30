@@ -21,16 +21,16 @@ export default async function DashboardPage() {
 
   return (
     <AppShell
-      title="Command center"
-      description="Monitor AI agent governance, approval flows, risk exposure, and policy health from one enterprise console."
+      title="Mission Control"
+      description="Real-time AI workforce operations center. Monitor worker activity, approvals, risk exposure, and compliance health."
     >
       <PageHeader
-        title="Governance performance"
-        description="Track the metrics that matter: decision velocity, risk trends, approval backlog, and policy enforcement."
+        title="Mission Control"
+        description="Executive dashboard for autonomous AI worker management. Real-time oversight of decisions, approvals, risks, and compliance."
       />
 
-      <section className="grid gap-4 xl:grid-cols-3">
-        {overview.map((item) => (
+      <div className="grid gap-4 xl:grid-cols-4">
+        {overview.slice(0, 4).map((item) => (
           <MetricCard
             key={item.label}
             label={item.label}
@@ -39,12 +39,12 @@ export default async function DashboardPage() {
             trend={item.label === "Policy Violations" ? "negative" : "positive"}
           />
         ))}
-      </section>
+      </div>
 
       <section className="grid gap-6 xl:grid-cols-[1.3fr_0.9fr]">
         <ChartCard
-          title="Decision trend"
-          description="Weekly decision volume across enterprise guardrails."
+          title="Worker decision velocity"
+          description="Daily autonomous decisions per day across your AI workforce."
         >
           <div className="mt-6 flex h-[260px] items-end gap-4">
             {trend.map((point) => (

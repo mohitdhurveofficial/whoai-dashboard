@@ -1,147 +1,218 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import AppShell from "@/app/components/AppShell";
 import { PageHeader } from "@/app/components/ui/PageHeader";
-import { SearchBar } from "@/app/components/ui/SearchBar";
-import { DataTable } from "@/app/components/ui/DataTable";
 import { StatusBadge } from "@/app/components/ui/StatusBadge";
-import { agents } from "@/lib/mockData";
+import { Plus, Lock, Zap } from "lucide-react";
 
-const sortOptions = [
-  { label: "Recently active", value: "recent" },
-  { label: "High risk first", value: "risk" },
-  { label: "Approval rate", value: "approval" },
+type AIWorker = {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  owner: string;
+  status: "ACTIVE" | "PAUSED" | "ARCHIVED";
+  riskScore: number;
+  permissions: number;
+  decisionsToday: number;
+};
+
+const workers: AIWorker[] = [
+  {
+    id: "worker-1",
+    name: "Payments Agent",
+    role: "Financial Operations",
+    department: "Finance",
+    owner: "Sarah Anderson",
+    status: "ACTIVE",
+    riskScore: 45,
+    permissions: 8,
+    decisionsToday: 127,
+  },
+  {
+    id: "worker-2",
+    name: "Data Privacy Agent",
+    role: "Compliance & Privacy",
+    department: "Legal",
+    owner: "Michael Chen",
+    status: "ACTIVE",
+    riskScore: 22,
+    permissions: 5,
+    decisionsToday: 42,
+  },
+  {
+    id: "worker-3",
+    name: "Analytics Engine",
+    role: "Business Intelligence",
+    department: "Analytics",
+    owner: "Emma Rodriguez",
+    status: "ACTIVE",
+    riskScore: 18,
+    permissions: 12,
+    decisionsToday: 89,
+  },
+  {
+    id: "worker-4",
+    name: "Support Bot",
+    role: "Customer Support",
+    department: "Support",
+    owner: "James Wilson",
+    status: "ACTIVE",
+    riskScore: 31,
+    permissions: 6,
+    decisionsToday: 204,
+  },
 ];
 
-export default function AgentsPage() {
-  const [query, setQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [sortBy, setSortBy] = useState("recent");
+const permissions = [
+  { id: "perm-1", name: "Read CRM", resource: "CRM", action: "READ" },
+  { id: "perm-2", name: "Send Emails", resource: "EMAIL", action: "WRITE" },
+  { id: "perm-3", name: "Access Customer Data", resource: "CUSTOMER_DATA", action: "READ" },
+  { id: "perm-4", name: "Execute Payments", resource: "PAYMENTS", action: "EXECUTE" },
+  { id: "perm-5", name: "Modify Systems", resource: "PRODUCTION", action: "WRITE" },
+  { id: "perm-6", name: "Access Logs", resource: "AUDIT_LOGS", action: "READ" },
+];
 
-  const filteredAgents = useMemo(() => {
-    const normalized = query.toLowerCase();
-    return agents
-      .filter((agent) => {
-        const matchesQuery =
-          agent.name.toLowerCase().includes(normalized) ||
-          agent.owner.toLowerCase().includes(normalized) ||
-          agent.policies.some((policy) => policy.toLowerCase().includes(normalized));
-
-        const matchesStatus = statusFilter === "All" || agent.status === statusFilter;
-
-        return matchesQuery && matchesStatus;
-      })
-      .sort((a, b) => {
-        if (sortBy === "risk") {
-          const rank = { High: 3, Medium: 2, Low: 1 };
-          return rank[b.riskLevel] - rank[a.riskLevel];
-        }
-        if (sortBy === "approval") {
-          return b.approvalRate - a.approvalRate;
-        }
-        return b.decisions - a.decisions;
-      });
-  }, [query, statusFilter, sortBy]);
+export default function AIWorkforcePage() {
+  const [selectedWorker, setSelectedWorker] = useState(workers[0]);
+  const workerPermissions = permissions.slice(0, selectedWorker.permissions);
 
   return (
     <AppShell
-      title="Agents registry"
-      description="Review your active AI agents, risk posture, assigned policies, and operational status."
+      title="AI workforce management"
+      description="Manage autonomous AI workers with identity, permissions, monitoring, and governance controls."
     >
       <PageHeader
-        title="Agent operations"
-        description="Search, filter, and prioritize agent activity across your enterprise governance model."
-        actions={
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-              Sort by: {sortOptions.find((option) => option.value === sortBy)?.label}
-            </div>
-          </div>
-        }
+        title="AI Workforce"
+        description="Command center for deploying, monitoring, and controlling your organization's AI workers."
       />
 
-      <div className="grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
-        <div className="space-y-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/30">
-          <div className="grid gap-4 md:grid-cols-3">
-            <SearchBar placeholder="Search agents, owners, policies..." value={query} onChange={setQuery} />
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3">
-              <label className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Status</label>
-              <select
-                className="mt-2 w-full bg-transparent text-sm text-slate-900 outline-none"
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-              >
-                <option>All</option>
-                <option>Active</option>
-                <option>Paused</option>
-                <option>Archived</option>
-              </select>
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_0.85fr]">
+        {/* Workers List */}
+        <section className="space-y-6 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/30">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Workforce</p>
+              <h2 className="mt-2 text-xl font-semibold text-slate-950">Active AI workers</h2>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-3">
-              <label className="block text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Sort</label>
-              <select
-                className="mt-2 w-full bg-transparent text-sm text-slate-900 outline-none"
-                value={sortBy}
-                onChange={(event) => setSortBy(event.target.value)}
-              >
-                {sortOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <button className="flex items-center justify-center gap-2 rounded-2xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition">
+              <Plus className="h-4 w-4" />
+              Deploy worker
+            </button>
           </div>
 
-          <DataTable
-            columns={[
-              { header: "Agent", accessor: "name" },
-              {
-                header: "Owner",
-                cell: (row) => <span className="text-slate-600">{row.owner}</span>,
-              },
-              {
-                header: "Status",
-                cell: (row) => <StatusBadge label={row.status} variant={row.status === "Active" ? "approved" : row.status === "Paused" ? "pending" : "rejected"} />,
-              },
-              {
-                header: "Risk",
-                cell: (row) => <StatusBadge label={row.riskLevel} variant={row.riskLevel === "High" ? "high" : row.riskLevel === "Medium" ? "medium" : "low"} />,
-              },
-              { header: "Last activity", cell: (row) => <span className="text-slate-600">{row.lastActivity}</span> },
-              { header: "Policies", cell: (row) => <span className="text-slate-600">{row.policies.join(", ")}</span> },
-            ]}
-            data={filteredAgents}
-            keyExtractor={(item) => item.id}
-            emptyMessage="No agents matched your search criteria."
-          />
-        </div>
-
-        <div className="space-y-4 rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/30">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Quick summary</p>
-            <h2 className="mt-2 text-xl font-semibold text-slate-950">Agent risk snapshot</h2>
-          </div>
-          <div className="space-y-4">
-            {filteredAgents.slice(0, 3).map((agent) => (
-              <div key={agent.id} className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex items-center justify-between gap-3">
+          <div className="space-y-3">
+            {workers.map((worker) => (
+              <button
+                key={worker.id}
+                onClick={() => setSelectedWorker(worker)}
+                className={`w-full rounded-3xl border p-4 text-left transition ${
+                  worker.id === selectedWorker.id
+                    ? "border-sky-500 bg-sky-50"
+                    : "border-slate-200 bg-white hover:bg-slate-50"
+                }`}
+              >
+                <div className="mb-3 flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold text-slate-950">{agent.name}</p>
-                    <p className="mt-1 text-sm text-slate-600">{agent.policies.join(", ")}</p>
+                    <p className="font-semibold text-slate-950">{worker.name}</p>
+                    <p className="text-sm text-slate-600">{worker.role}</p>
                   </div>
-                  <StatusBadge
-                    label={agent.riskLevel}
-                    variant={agent.riskLevel === "High" ? "high" : agent.riskLevel === "Medium" ? "medium" : "low"}
-                  />
+                  <StatusBadge label="Active" variant="approved" />
                 </div>
-                <p className="mt-3 text-sm text-slate-500">Last activity: {agent.lastActivity}</p>
-              </div>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="rounded-2xl bg-slate-100 px-2 py-1">
+                    <p className="text-slate-600">Risk: {worker.riskScore}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-100 px-2 py-1">
+                    <p className="text-slate-600">Perms: {worker.permissions}</p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-100 px-2 py-1">
+                    <p className="text-slate-600">Today: {worker.decisionsToday}</p>
+                  </div>
+                </div>
+              </button>
             ))}
           </div>
-        </div>
+        </section>
+
+        {/* Worker Details */}
+        <aside className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/30">
+          <div className="mb-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Worker ID</p>
+            <h2 className="mt-2 text-xl font-semibold text-slate-950">{selectedWorker.name}</h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Department</p>
+              <p className="mt-2 font-semibold text-slate-950">{selectedWorker.department}</p>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Owner</p>
+              <p className="mt-2 font-semibold text-slate-950">{selectedWorker.owner}</p>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Risk Score</p>
+              <div className="mt-3 flex items-center gap-2">
+                <div className="flex-1 h-2 rounded-full bg-slate-200">
+                  <div
+                    className="h-full rounded-full bg-sky-500"
+                    style={{ width: `${selectedWorker.riskScore}%` }}
+                  ></div>
+                </div>
+                <span className="font-semibold text-slate-950">{selectedWorker.riskScore}</span>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4 space-y-3">
+              <button className="w-full flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition">
+                <Lock className="h-4 w-4" />
+                Manage identity
+              </button>
+              <button className="w-full flex items-center justify-center gap-2 rounded-2xl bg-white border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition">
+                <Zap className="h-4 w-4" />
+                View permissions
+              </button>
+            </div>
+          </div>
+        </aside>
       </div>
+
+      {/* Permissions Matrix */}
+      <section className="rounded-[32px] border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/30">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Permissions</p>
+          <h2 className="mt-2 text-xl font-semibold text-slate-950">{selectedWorker.name} access controls</h2>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-200">
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Permission</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Resource</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Action</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workerPermissions.map((perm, idx) => (
+                <tr key={perm.id} className={idx !== workerPermissions.length - 1 ? "border-b border-slate-100" : ""}>
+                  <td className="px-4 py-3 text-sm font-medium text-slate-950">{perm.name}</td>
+                  <td className="px-4 py-3 text-sm text-slate-600">{perm.resource}</td>
+                  <td className="px-4 py-3 text-sm text-slate-600">{perm.action}</td>
+                  <td className="px-4 py-3">
+                    <StatusBadge label="Granted" variant="approved" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </AppShell>
   );
 }
