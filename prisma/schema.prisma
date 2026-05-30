@@ -1,0 +1,163 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  REVIEWER
+  MEMBER
+  VIEWER
+}
+
+enum AgentStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum DecisionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Organization {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  members     Membership[]
+  agents      Agent[]
+  decisions   Decision[]
+  auditLogs   AuditLog[]
+
+  @@map("organizations")
+}
+
+model UserProfile {
+  id          String       @id
+  email       String       @unique
+  fullName    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  memberships Membership[]
+  approvals   Approval[]
+  auditLogs   AuditLog[]
+
+  @@map("user_profiles")
+}
+
+model Membership {
+  id              String           @id @default(cuid())
+  userId          String
+  organizationId  String
+  role            MembershipRole
+
+  createdAt       DateTime         @default(now())
+
+  user            UserProfile      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@map("memberships")
+}
+
+model Agent {
+  id              String           @id @default(cuid())
+  organizationId  String
+
+  name            String
+  description     String?
+  status          AgentStatus      @default(ACTIVE)
+
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  decisions       Decision[]
+
+  @@map("agents")
+}
+
+model Decision {
+  id                String            @id @default(cuid())
+  organizationId    String
+  agentId           String
+
+  title             String
+  description       String?
+
+  riskScore         Int
+  confidenceScore   Int
+
+  riskLevel         RiskLevel
+  status            DecisionStatus    @default(PENDING)
+
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  organization      Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  agent             Agent             @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  approvals         Approval[]
+
+  @@map("decisions")
+}
+
+model Approval {
+  id            String           @id @default(cuid())
+
+  decisionId    String
+  reviewerId    String
+
+  status        ApprovalStatus   @default(PENDING)
+  comment       String?
+
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  decision      Decision         @relation(fields: [decisionId], references: [id], onDelete: Cascade)
+  reviewer      UserProfile      @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  @@map("approvals")
+}
+
+model AuditLog {
+  id              String          @id @default(cuid())
+
+  organizationId  String
+  actorId         String?
+
+  action          String
+  payload         Json?
+
+  createdAt       DateTime        @default(now())
+
+  organization    Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actor           UserProfile?    @relation(fields: [actorId], references: [id])
+
+  @@map("audit_logs")
+}

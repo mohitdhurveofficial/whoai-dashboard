@@ -13,9 +13,8 @@ export default async function AgentsPage() {
         <thead>
           <tr className="border-b">
             <th className="p-3 text-left">Name</th>
-            <th className="p-3 text-left">Environment</th>
             <th className="p-3 text-left">Status</th>
-            <th className="p-3 text-left">Owner</th>
+            <th className="p-3 text-left">Decisions</th>
           </tr>
         </thead>
 
@@ -23,9 +22,8 @@ export default async function AgentsPage() {
           {agents.map((agent) => (
             <tr key={agent.id} className="border-b">
               <td className="p-3">{agent.name}</td>
-              <td className="p-3">{agent.environment}</td>
               <td className="p-3">{agent.status}</td>
-              <td className="p-3">{agent.owner_email}</td>
+              <td className="p-3">{agent.decisions}</td>
             </tr>
           ))}
         </tbody>
