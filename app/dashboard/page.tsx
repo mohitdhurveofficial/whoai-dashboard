@@ -7,10 +7,10 @@ import {
   getRiskAnalytics,
 } from "@/lib/api";
 
-import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
-import KpiCard from "../components/KpiCard";
-import DecisionTable from "../components/DecisionTable";
+import Sidebar from "@/app/components/Sidebar";
+import Navbar from "@/app/components/Navbar";
+import KpiCard from "@/app/components/KpiCard";
+import DecisionTable from "@/app/components/DecisionTable";
 
 export default async function DashboardPage() {
   const overview = await getOverview();
@@ -21,156 +21,142 @@ export default async function DashboardPage() {
   const riskAnalytics = await getRiskAnalytics();
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden bg-[#f8f5ef]">
       <Sidebar />
-
-      <div className="flex-1 bg-slate-50 min-h-screen">
+      <div className="flex-1 flex flex-col h-screen overflow-hidden">
         <Navbar />
-
-        <main className="p-8">
-          <h1 className="text-4xl font-bold mb-8">
-            WhoAI Governance Dashboard
-          </h1>
-
-          {/* Core KPIs */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <KpiCard title="Agents" value={overview.agents} />
-            <KpiCard title="Policies" value={overview.policies} />
-            <KpiCard title="API Keys" value={overview.api_keys} />
-            <KpiCard title="Risk Score" value={overview.risk_score} />
-          </div>
-
-          {/* Decision Analytics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <KpiCard
-              title="Total Decisions"
-              value={decisionAnalytics.total_decisions}
-            />
-
-            <KpiCard
-              title="Approved"
-              value={decisionAnalytics.approved}
-            />
-
-            <KpiCard
-              title="Approval Required"
-              value={decisionAnalytics.approval_required}
-            />
-
-            <KpiCard
-              title="Approval Rate %"
-              value={decisionAnalytics.approval_rate}
-            />
-          </div>
-
-          {/* Risk Analytics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <KpiCard
-              title="Low Risk"
-              value={riskAnalytics.low_risk}
-            />
-
-            <KpiCard
-              title="Medium Risk"
-              value={riskAnalytics.medium_risk}
-            />
-
-            <KpiCard
-              title="High Risk"
-              value={riskAnalytics.high_risk}
-            />
-
-            <KpiCard
-              title="Approval Required"
-              value={riskAnalytics.approval_required}
-            />
-          </div>
-
-          {/* System Health */}
-          <div className="bg-white rounded-xl shadow p-6 mb-8">
-            <h2 className="text-2xl font-bold mb-4">
-              System Health
-            </h2>
-
-            <div className="grid grid-cols-2 gap-4">
-              <p>Health Score: {doctor.health_score}</p>
-              <p>Security Score: {doctor.security_score}</p>
-              <p>Policy Coverage: {doctor.policy_coverage}</p>
-              <p>Readiness Score: {doctor.readiness_score}</p>
+        <div className="flex-1 overflow-y-auto texture relative">
+          <main className="p-6 md:p-10 max-w-[1440px] mx-auto space-y-8 pb-20">
+            <div>
+              <h1 className="text-[32px] md:text-[40px] font-black tracking-tight text-slate-900">
+                WhoAI Governance Dashboard
+              </h1>
+              <p className="text-slate-500 font-medium mt-2 text-[15px]">
+                High-level overview of enterprise AI policies and agent activity.
+              </p>
             </div>
-          </div>
 
-          {/* Recent Activity */}
-          <div className="bg-white rounded-xl shadow p-6 mb-8">
-            <h2 className="text-2xl font-bold mb-4">
-              Recent Activity
-            </h2>
+            {/* Core KPIs */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <KpiCard title="Agents" value={overview.agents} />
+              <KpiCard title="Policies" value={overview.policies} />
+              <KpiCard title="API Keys" value={overview.api_keys} />
+              <KpiCard title="Risk Score" value={overview.risk_score} />
+            </div>
 
-            <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <h3 className="font-bold mb-2">
-                  Decisions
-                </h3>
+            {/* Decision Analytics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <KpiCard
+                title="Total Decisions"
+                value={decisionAnalytics.total_decisions}
+              />
+              <KpiCard
+                title="Approved"
+                value={decisionAnalytics.approved}
+              />
+              <KpiCard
+                title="Approval Required"
+                value={decisionAnalytics.approval_required}
+              />
+              <KpiCard
+                title="Approval Rate %"
+                value={decisionAnalytics.approval_rate}
+              />
+            </div>
 
-                {activity.recent_decisions?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="border rounded p-3 mb-2"
-                  >
-                    <p>{item.decision}</p>
+            {/* Risk Analytics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <KpiCard
+                title="Low Risk"
+                value={riskAnalytics.low_risk}
+              />
+              <KpiCard
+                title="Medium Risk"
+                value={riskAnalytics.medium_risk}
+              />
+              <KpiCard
+                title="High Risk"
+                value={riskAnalytics.high_risk}
+              />
+              <KpiCard
+                title="Approval Required"
+                value={riskAnalytics.approval_required}
+              />
+            </div>
 
-                    <p className="text-sm text-gray-500">
-                      {item.reason}
-                    </p>
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* System Health */}
+              <div className="premium-panel glass p-6 rounded-3xl mb-8">
+                <h2 className="text-xl font-black tracking-tight text-slate-900 mb-6">
+                  System Health
+                </h2>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-white/50 p-4 rounded-2xl ring-1 ring-black/5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Health Score</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{doctor.health_score}</p>
                   </div>
-                ))}
+                  <div className="bg-white/50 p-4 rounded-2xl ring-1 ring-black/5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Security Score</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{doctor.security_score}</p>
+                  </div>
+                  <div className="bg-white/50 p-4 rounded-2xl ring-1 ring-black/5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Policy Coverage</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{doctor.policy_coverage}</p>
+                  </div>
+                  <div className="bg-white/50 p-4 rounded-2xl ring-1 ring-black/5">
+                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Readiness Score</p>
+                    <p className="text-2xl font-black text-slate-900 mt-1">{doctor.readiness_score}</p>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="font-bold mb-2">
-                  Approvals
-                </h3>
-
-                {activity.recent_approvals?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="border rounded p-3 mb-2"
-                  >
-                    <p>{item.status}</p>
+              {/* Recent Activity */}
+              <div className="premium-panel glass p-6 rounded-3xl mb-8">
+                <h2 className="text-xl font-black tracking-tight text-slate-900 mb-6">
+                  Recent Activity
+                </h2>
+                <div className="space-y-6 overflow-y-auto max-h-[300px] pr-2">
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-700 mb-3 border-b border-black/5 pb-2">Decisions</h3>
+                    {activity.recent_decisions?.map((item) => (
+                      <div key={item.id} className="bg-white/60 rounded-xl p-4 mb-3 ring-1 ring-black/5 shadow-sm">
+                        <p className="font-bold text-sm text-slate-900">{item.decision}</p>
+                        <p className="text-[13px] text-slate-500 mt-1">{item.reason}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-
-              <div>
-                <h3 className="font-bold mb-2">
-                  Agents
-                </h3>
-
-                {activity.recent_agents?.map((item) => (
-                  <div
-                    key={item.id}
-                    className="border rounded p-3 mb-2"
-                  >
-                    <p>{item.name}</p>
-
-                    <p className="text-sm text-gray-500">
-                      {item.status}
-                    </p>
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-700 mb-3 border-b border-black/5 pb-2">Approvals</h3>
+                    {activity.recent_approvals?.map((item) => (
+                      <div key={item.id} className="bg-white/60 rounded-xl p-3 mb-3 ring-1 ring-black/5 shadow-sm">
+                        <p className="font-bold text-sm text-slate-900 capitalize">{item.status}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-700 mb-3 border-b border-black/5 pb-2">Agents</h3>
+                    {activity.recent_agents?.map((item) => (
+                      <div key={item.id} className="bg-white/60 rounded-xl p-4 mb-3 ring-1 ring-black/5 shadow-sm">
+                        <p className="font-bold text-sm text-slate-900">{item.name}</p>
+                        <p className="text-[13px] text-slate-500 mt-1 capitalize">{item.status}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Recent Decisions */}
-          <div className="bg-white rounded-xl shadow p-6">
-            <h2 className="text-2xl font-bold mb-4">
-              Recent Decisions
-            </h2>
-
-            <DecisionTable decisions={decisions} />
-          </div>
-        </main>
+            {/* Recent Decisions */}
+            <div className="premium-panel glass p-6 rounded-3xl">
+              <h2 className="text-xl font-black tracking-tight text-slate-900 mb-6">
+                Recent Decisions
+              </h2>
+              <div className="ring-1 ring-black/5 rounded-2xl overflow-hidden bg-white/50">
+                <DecisionTable decisions={decisions} />
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );
