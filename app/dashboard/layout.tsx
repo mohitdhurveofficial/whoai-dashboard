@@ -1,11 +1,11 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import { Search, Bell, Settings } from "lucide-react";
-import ThemeToggle from "@/app/components/ThemeToggle";
+// Dashboard theme toggle removed to enforce global light mode
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden w-full">
+    <div className="flex h-screen bg-slate-50 overflow-hidden w-full">
       {/* Reuse existing Sidebar without modification */}
       <Sidebar />
       
@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <ThemeToggle />
+            {/* Theme toggle disabled — global light mode enforced */}
             <button className="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
               <Bell className="h-5 w-5" />
             </button>

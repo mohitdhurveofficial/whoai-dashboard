@@ -1,15 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { PageHeader } from "@/components/ui/PageHeader";
-import { KpiCard } from "@/components/ui/KpiCard";
-import { SectionCard } from "@/components/ui/SectionCard";
-import { DataTable, type DataTableProps } from "@/components/ui/DataTable";
-import { SearchBar } from "@/components/ui/SearchBar";
-import { FilterTabs } from "@/components/ui/FilterTabs";
-import { RiskBadge } from "@/components/ui/RiskBadge";
-import { StatusBadge } from "@/components/ui/StatusBadge";
-import { SlideOver } from "@/components/ui/SlideOver";
+import { PageHeader } from "@/app/components/ui/PageHeader";
+import { KpiCard } from "@/app/components/ui/KpiCard";
+import { SectionCard } from "@/app/components/ui/SectionCard";
+import { DataTable, type DataTableProps } from "@/app/components/ui/DataTable";
+import { SearchBar } from "@/app/components/ui/SearchBar";
+import { FilterTabs } from "@/app/components/ui/FilterTabs";
+import { RiskBadge } from "@/app/components/ui/RiskBadge";
+import { StatusBadge } from "@/app/components/ui/StatusBadge";
+import { SlideOver } from "@/app/components/ui/SlideOver";
 import { ListChecks, AlertTriangle, UserCheck, Activity, Eye, Download } from "lucide-react";
 
 const FILTER_TABS = ["All", "Low Risk", "Medium Risk", "High Risk", "Critical Risk", "Needs Approval", "Approved", "Rejected"];
@@ -64,7 +64,12 @@ export default function DecisionsClient({ initialData }: { initialData: Decision
     { header: "Action", accessorKey: "action" },
     { header: "Risk Score", accessorKey: "riskScore", cell: (item: DecisionLedgerItem) => <RiskBadge level={item.riskLevel} /> },
     { header: "Confidence", accessorKey: "confidenceScore", cell: (item: DecisionLedgerItem) => <span className="text-slate-600">{item.confidenceScore}%</span> },
-    { header: "Status", accessorKey: "status", cell: (item: DecisionLedgerItem) => <StatusBadge status={item.status} /> },
+    { header: "Status", accessorKey: "status", cell: (item: DecisionLedgerItem) => {
+        const statusLabel = String(item.status);
+        const variant = statusLabel.toLowerCase() === 'approved' ? 'approved' : statusLabel.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+        return <StatusBadge label={statusLabel} variant={variant} />
+      }
+    },
     { header: "", cell: (item: DecisionLedgerItem) => (
         <button onClick={() => setSelectedDecision(item)} className="flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700">
           <Eye className="h-4 w-4" /> Review

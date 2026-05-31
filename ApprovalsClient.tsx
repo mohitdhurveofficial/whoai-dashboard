@@ -16,9 +16,9 @@ import {
   Filter
 } from "lucide-react";
 import { updateApprovalStatus } from "@/lib/actions/approvals";
-import { KpiCard } from "@/components/ui/KpiCard";
-import { RiskBadge } from "@/components/ui/RiskBadge";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { KpiCard } from "@/app/components/ui/KpiCard";
+import { RiskBadge } from "@/app/components/ui/RiskBadge";
+import { StatusBadge } from "@/app/components/ui/StatusBadge";
 
 export type ApprovalStatus = "pending" | "approved" | "rejected";
 export type RiskLevel = "low" | "medium" | "high";
@@ -207,7 +207,11 @@ export default function ApprovalsClient({ initialApprovals }: { initialApprovals
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <StatusBadge status={app.status === 'pending' ? 'Pending' : app.status === 'approved' ? 'Approved' : 'Rejected'} />
+                        {(() => {
+                          const label = app.status === 'pending' ? 'Pending' : app.status === 'approved' ? 'Approved' : 'Rejected';
+                          const variant = label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+                          return <StatusBadge label={label} variant={variant} />;
+                        })()}
                       </td>
                       <td className="px-6 py-4 text-[13px] font-medium text-slate-500">
                         {mounted
@@ -304,7 +308,11 @@ export default function ApprovalsClient({ initialApprovals }: { initialApprovals
                           </p>
                         </div>
                       </div>
-                      <StatusBadge status={selectedApproval.status === 'pending' ? 'Pending' : selectedApproval.status === 'approved' ? 'Approved' : 'Rejected'} />
+                        {(() => {
+                          const label = selectedApproval.status === 'pending' ? 'Pending' : selectedApproval.status === 'approved' ? 'Approved' : 'Rejected';
+                          const variant = label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+                          return <StatusBadge label={label} variant={variant} />;
+                        })()}
                     </div>
                     <div className="p-4 bg-slate-900 rounded-xl text-emerald-400 font-mono text-[13px] leading-relaxed shadow-inner overflow-x-auto whitespace-pre-wrap">
                       <span className="text-slate-500 mr-2">$</span>
