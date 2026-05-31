@@ -26,6 +26,7 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setError("");
 
     if (!agreeToTerms) {
@@ -41,19 +42,32 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      // Placeholder: In production, this would call an API endpoint
-      if (formData.email && formData.password && formData.fullName) {
-        // Store session
-        localStorage.setItem("user_email", formData.email);
-        localStorage.setItem("is_authenticated", "true");
-        
-        // Redirect to email verification or onboarding
-        router.push("/auth/verify-email");
-      } else {
-        setError("Please fill in all fields");
+      const res = await fetch(
+        "/api/ai-workers/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.fullName,
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          data.error || "Signup failed"
+        );
       }
-    } catch {
-      setError("Signup failed. Please try again.");
+
+      router.push("/auth/login");
+    } catch (err: any) {
+      setError(err.message || "Signup failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
