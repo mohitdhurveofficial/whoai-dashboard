@@ -8,6 +8,7 @@ import DecisionDrawer from "@/app/components/decisions/DecisionDrawer";
 import { Decision, DecisionStatus } from "@/app/components/decisions/types";
 import { mockDecisions } from "@/app/components/decisions/mockData";
 import WorkspaceLayout from "@/app/components/layouts/WorkspaceLayout";
+import { PageHeader } from "@/app/components/ui/PageHeader";
 
 export default function DecisionsPage() {
   const [decisions, setDecisions] = useState<Decision[]>([]);
@@ -78,15 +79,10 @@ export default function DecisionsPage() {
   return (
     <WorkspaceLayout>
       <div className="p-6 max-w-[1600px] mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Decisions Center
-          </h1>
-
-          <p className="text-sm text-slate-500 mt-1">
-            Review, approve, and audit AI actions across your organization.
-          </p>
-        </div>
+        <PageHeader 
+          title="Decisions Center" 
+          subtitle="Review, approve, and audit AI actions across your organization." 
+        />
 
         <DecisionMetrics
           {...metrics}

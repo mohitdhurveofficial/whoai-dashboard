@@ -1,5 +1,6 @@
 import React from "react";
 import { Search, Filter, Download } from "lucide-react";
+import { Button } from "@/app/components/ui/Button";
 
 interface DecisionFiltersProps {
   onSearch: (query: string) => void;
@@ -19,14 +20,12 @@ export default function DecisionFilters({ onSearch, onExport }: DecisionFiltersP
         />
       </div>
       <div className="flex items-center gap-3 w-full sm:w-auto">
-        <button className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
-          <Filter className="h-4 w-4" />
+        <Button variant="secondary" icon={Filter} className="w-full sm:w-auto">
           Filters
-        </button>
-        <button onClick={onExport} className="flex items-center justify-center gap-2 w-full sm:w-auto px-4 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-sm">
-          <Download className="h-4 w-4" />
+        </Button>
+        <Button variant="secondary" icon={Download} onClick={onExport} className="w-full sm:w-auto">
           Export
-        </button>
+        </Button>
       </div>
     </div>
   );

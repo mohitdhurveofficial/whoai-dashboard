@@ -1,24 +1,24 @@
-import React from "react";
-import { Activity, Clock, CheckCircle2, AlertTriangle, Percent } from "lucide-react";
-import { Card } from "@/app/components/ui/Card";
+import React from 'react';
+import { Users, PauseCircle, Activity, CheckSquare, ShieldCheck } from 'lucide-react';
+import { Card } from '@/app/components/ui/Card';
 
-interface DecisionMetricsProps {
-  totalDecisions: number;
+interface MetricsProps {
+  activeWorkers: number;
+  pausedWorkers: number;
+  decisionsToday: number;
   pendingApprovals: number;
-  autoApproved: number;
-  escalated: number;
-  avgConfidence: number;
+  governanceScore: number;
   isLoading?: boolean;
 }
 
-export default function DecisionMetrics({
-  totalDecisions,
+export default function WorkforceMetrics({
+  activeWorkers,
+  pausedWorkers,
+  decisionsToday,
   pendingApprovals,
-  autoApproved,
-  escalated,
-  avgConfidence,
-  isLoading,
-}: DecisionMetricsProps) {
+  governanceScore,
+  isLoading
+}: MetricsProps) {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
@@ -33,11 +33,11 @@ export default function DecisionMetrics({
   }
 
   const cards = [
-    { title: "Total Decisions", value: totalDecisions.toLocaleString(), icon: Activity, color: "text-blue-600 dark:text-blue-400" },
-    { title: "Pending Review", value: pendingApprovals, icon: Clock, color: "text-amber-600 dark:text-amber-400" },
-    { title: "Auto-Approved", value: autoApproved.toLocaleString(), icon: CheckCircle2, color: "text-emerald-600 dark:text-emerald-400" },
-    { title: "Escalated", value: escalated, icon: AlertTriangle, color: "text-violet-600 dark:text-violet-400" },
-    { title: "Avg Confidence", value: `${avgConfidence}%`, icon: Percent, color: "text-sky-600 dark:text-sky-400" },
+    { title: 'Active Workers', value: activeWorkers, icon: Users, color: 'text-blue-600 dark:text-blue-400' },
+    { title: 'Paused Workers', value: pausedWorkers, icon: PauseCircle, color: 'text-amber-600 dark:text-amber-400' },
+    { title: 'Decisions Today', value: decisionsToday.toLocaleString(), icon: Activity, color: 'text-emerald-600 dark:text-emerald-400' },
+    { title: 'Pending Approvals', value: pendingApprovals, icon: CheckSquare, color: 'text-violet-600 dark:text-violet-400' },
+    { title: 'Governance Score', value: `${governanceScore}/100`, icon: ShieldCheck, color: 'text-sky-600 dark:text-sky-400' },
   ];
 
   return (

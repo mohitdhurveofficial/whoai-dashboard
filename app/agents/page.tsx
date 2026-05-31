@@ -8,6 +8,7 @@ import WorkerDrawer from "@/app/components/agents/WorkerDrawer";
 import { AIWorker } from "@/app/components/agents/types";
 import { mockWorkers } from "@/app/components/agents/mockData";
 import WorkspaceLayout from "@/app/components/layouts/WorkspaceLayout";
+import { PageHeader } from "@/app/components/ui/PageHeader";
 
 export default function AgentsPage() {
   const [workers, setWorkers] = useState<AIWorker[]>([]);
@@ -67,15 +68,10 @@ export default function AgentsPage() {
   return (
     <WorkspaceLayout>
       <div className="p-6 max-w-[1600px] mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            AI Workforce
-          </h1>
-
-          <p className="text-sm text-slate-500 mt-1">
-            Manage, monitor and govern AI workers across the organization
-          </p>
-        </div>
+        <PageHeader 
+          title="AI Workforce" 
+          subtitle="Manage, monitor and govern AI workers across the organization" 
+        />
 
         <WorkforceMetrics
           {...metrics}

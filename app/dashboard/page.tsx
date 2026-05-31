@@ -6,6 +6,7 @@ import RecentDecisions from './RecentDecisions';
 import ApprovalQueue from './ApprovalQueue';
 import AuditFeed from './AuditFeed';
 import SystemHealth from './SystemHealth';
+import { PageHeader } from '@/app/components/ui/PageHeader';
 
 async function DashboardContent() {
   // In production, fetch this dynamically:
@@ -52,12 +53,10 @@ async function DashboardContent() {
 export default function DashboardPage() {
   return (
     <div className="p-6 max-w-[1600px] mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Workspace Overview</h1>
-          <p className="text-sm text-slate-500 mt-1">Real-time governance activity and human-in-the-loop approvals.</p>
-        </div>
-      </div>
+      <PageHeader 
+        title="Workspace Overview" 
+        subtitle="Real-time governance activity and human-in-the-loop approvals." 
+      />
       <Suspense fallback={<MetricsGrid isLoading={true} />}>
         <DashboardContent />
       </Suspense>

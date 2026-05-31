@@ -3,6 +3,8 @@ import { Decision, DecisionStatus } from "./types";
 import { X, Shield, Activity, FileText, AlertCircle, Check } from "lucide-react";
 import DecisionStatusBadge from "./DecisionStatusBadge";
 import DecisionRiskBadge from "./DecisionRiskBadge";
+import { Button } from "@/app/components/ui/Button";
+import { tokens } from "@/app/components/ui/tokens";
 
 interface DecisionDrawerProps {
   decision: Decision | null;
@@ -17,19 +19,19 @@ export default function DecisionDrawer({ decision, isOpen, onClose, onStatusChan
   return (
     <>
       <div 
-        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40" 
+        className={tokens.layout.drawerOverlay} 
         onClick={onClose}
       />
-      <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col border-l border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out">
+      <div className={tokens.layout.drawerContent}>
         
         <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-800">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Decision Details</h2>
-          <button 
+          <Button variant="ghost"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+            className="!p-2 rounded-full"
           >
             <X className="h-5 w-5" />
-          </button>
+          </Button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
@@ -101,26 +103,32 @@ export default function DecisionDrawer({ decision, isOpen, onClose, onStatusChan
         <div className="p-4 border-t border-slate-200 dark:border-slate-800">
           {decision.status === "Pending" || decision.status === "Escalated" ? (
             <div className="flex gap-3">
-              <button 
+              <Button 
+                variant="danger"
+                icon={X}
                 onClick={() => onStatusChange(decision.id, "Rejected")}
-                className="flex-1 px-4 py-2 bg-white dark:bg-slate-800 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 rounded-lg text-sm font-medium hover:bg-rose-50 dark:hover:bg-rose-900/20 transition flex items-center justify-center gap-2"
+                className="flex-1"
               >
-                <X className="h-4 w-4" /> Reject
-              </button>
-              <button 
+                Reject
+              </Button>
+              <Button 
+                variant="primary"
+                icon={Check}
                 onClick={() => onStatusChange(decision.id, "Approved")}
-                className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition shadow-sm flex items-center justify-center gap-2"
+                className="flex-1"
               >
-                <Check className="h-4 w-4" /> Approve
-              </button>
+                Approve
+              </Button>
             </div>
           ) : (
-            <button 
+            <Button 
+              variant="secondary"
+              icon={AlertCircle}
               onClick={() => onStatusChange(decision.id, "Escalated")}
-              className="w-full px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition flex items-center justify-center gap-2"
+              className="w-full"
             >
-              <AlertCircle className="h-4 w-4" /> Re-evaluate / Escalate
-            </button>
+              Re-evaluate / Escalate
+            </Button>
           )}
         </div>
 

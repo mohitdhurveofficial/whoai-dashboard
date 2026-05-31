@@ -1,9 +1,9 @@
-import React from "react";
-import { RiskLevel } from "./types";
-import { Shield, ShieldAlert, ShieldCheck } from "lucide-react";
-import { Badge } from "@/app/components/ui/Badge";
+import React from 'react';
+import { RiskLevel } from './types';
+import { Shield, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Badge } from '@/app/components/ui/Badge';
 
-export default function DecisionRiskBadge({ level }: { level: RiskLevel }) {
+export default function RiskBadge({ level }: { level: RiskLevel }) {
   const variantMap: Record<RiskLevel, "success" | "warning" | "critical"> = {
     Low: "success",
     Medium: "warning",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { CommandPalette } from "@/app/components/CommandPalette";
+import { ThemeProvider } from "@/app/components/ThemeProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://whoai.ai"),
@@ -66,9 +67,11 @@ export default function RootLayout({
   suppressHydrationWarning
   data-scroll-behavior="smooth"
 >
-      <body className="min-h-screen bg-slate-50 text-slate-950 antialiased">
-        {children}
-        <CommandPalette />
+      <body className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-950 dark:text-white antialiased transition-colors duration-200">
+        <ThemeProvider>
+          {children}
+          <CommandPalette />
+        </ThemeProvider>
       </body>
     </html>
   );
