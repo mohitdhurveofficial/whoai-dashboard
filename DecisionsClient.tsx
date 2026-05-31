@@ -62,11 +62,11 @@ export default function DecisionsClient({ initialData }: { initialData: Decision
     { header: "Timestamp", accessorKey: "timestamp", cell: (item: DecisionLedgerItem) => <span className="text-slate-600">{new Date(item.timestamp).toLocaleString()}</span> },
     { header: "Agent", accessorKey: "agentName", cell: (item: DecisionLedgerItem) => <span className="font-medium text-slate-900">{item.agentName}</span> },
     { header: "Action", accessorKey: "action" },
-    { header: "Risk Score", accessorKey: "riskScore", cell: (item: DecisionLedgerItem) => <RiskBadge level={item.riskLevel} /> },
+    { header: "Risk Score", accessorKey: "riskScore", cell: (item: DecisionLedgerItem) => <RiskBadge level={item.riskLevel as "Low" | "Medium" | "High"} /> },
     { header: "Confidence", accessorKey: "confidenceScore", cell: (item: DecisionLedgerItem) => <span className="text-slate-600">{item.confidenceScore}%</span> },
     { header: "Status", accessorKey: "status", cell: (item: DecisionLedgerItem) => {
         const statusLabel = String(item.status);
-        const variant = statusLabel.toLowerCase() === 'approved' ? 'approved' : statusLabel.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+        const variant = (statusLabel.toLowerCase() === 'approved' ? 'approved' : statusLabel.toLowerCase() === 'rejected' ? 'rejected' : 'pending') as "approved" | "pending" | "rejected";
         return <StatusBadge label={statusLabel} variant={variant} />
       }
     },
@@ -80,7 +80,16 @@ export default function DecisionsClient({ initialData }: { initialData: Decision
 
   return (
     <div className="space-y-6 pb-12">
-      <PageHeader title="Decision Intelligence" description="Immutable ledger of all AI worker decisions and actions." action={<button className="flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 transition-all"><Download className="h-4 w-4" /> Export Ledger</button>} />
+      <PageHeader
+        title="Decision Intelligence"
+        description="Immutable ledger of all AI worker decisions and actions."
+        actions={
+          <button className="flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-slate-50 transition-all">
+            <Download className="h-4 w-4" />
+            Export Ledger
+          </button>
+        }
+      />
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <KpiCard title="Decisions Today" value={initialData.length} icon={ListChecks} />

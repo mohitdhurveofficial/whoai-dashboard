@@ -209,7 +209,7 @@ export default function ApprovalsClient({ initialApprovals }: { initialApprovals
                       <td className="px-6 py-4">
                         {(() => {
                           const label = app.status === 'pending' ? 'Pending' : app.status === 'approved' ? 'Approved' : 'Rejected';
-                          const variant = label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+                          const variant = (label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending') as "approved" | "pending" | "rejected";
                           return <StatusBadge label={label} variant={variant} />;
                         })()}
                       </td>
@@ -310,7 +310,7 @@ export default function ApprovalsClient({ initialApprovals }: { initialApprovals
                       </div>
                         {(() => {
                           const label = selectedApproval.status === 'pending' ? 'Pending' : selectedApproval.status === 'approved' ? 'Approved' : 'Rejected';
-                          const variant = label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending';
+                          const variant = (label.toLowerCase() === 'approved' ? 'approved' : label.toLowerCase() === 'rejected' ? 'rejected' : 'pending') as "approved" | "pending" | "rejected";
                           return <StatusBadge label={label} variant={variant} />;
                         })()}
                     </div>
